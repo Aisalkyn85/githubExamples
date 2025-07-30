@@ -1,2 +1,3 @@
 name: second workflow
-
+on: [push]
+   
