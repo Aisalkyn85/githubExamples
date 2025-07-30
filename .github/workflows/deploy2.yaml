@@ -1,3 +1,20 @@
-name: second workflow
+name: Multi-Job Example
+
 on: [push]
-   
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      greeting: ${{ steps.set-output.outputs.greeting }}
+    steps:
+      - name: Say Hello
+        id: set-output
+        run: echo "greeting=Hello from Job 1" >> $GITHUB_OUTPUT
+
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use output from Job 1
+        run: echo "${{ needs.job1.outputs.greeting }}"
